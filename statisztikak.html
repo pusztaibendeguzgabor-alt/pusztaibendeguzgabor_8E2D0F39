@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<link rel="stylesheet" href="kezdooldal.html">
+<link rel="stylesheet" href="jatekoldala.html">
+<meta charset="UTF-8">
+<title>Eredmény</title>
+</head>
+<body style="font-family: Arial; text-align:center;">
+
+<h1>Eredményed</h1>
+<p id="eredmeny"></p>
+<p id="stat"></p>
+<button onclick="ujra()">Új játék</button>
+
+<script>
+function betoltEredmeny() {
+    //a JSON tömböket tud szöveggé és vissza alakítani
+    let probak = JSON.parse(localStorage.getItem("probak"));
+    let lepes = localStorage.getItem("lepes");
+    document.getElementById("eredmeny").innerText = 
+        "A számot " + lepes + " lépésből találtad el!";
+
+    let cel = probak[probak.length - 1];
+    let nagyobbDb = szamolNagyobb(probak, cel);
+    document.getElementById("stat").innerText =
+        "A próbálkozások közül " + nagyobbDb + " volt nagyobb a helyes számnál.";
+}
+
+function szamolNagyobb(tomb, szam) {
+    let db = 0;
+    for (let i = 0; i < tomb.length; i++) {
+        if (tomb[i] > szam) db++;
+    }
+    return db;
+}
+
+function ujra() {
+    window.location.href = "kezdooldal.html";
+}
+
+betoltEredmeny();
+</script>
+</body>
+</html>

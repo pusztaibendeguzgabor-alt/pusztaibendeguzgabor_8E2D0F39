@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<link rel="stylesheet" href="statisztikak.html">
+<meta charset="UTF-8">
+<title>Játék</title>
+</head>
+<body style="font-family: Arial; text-align:center;">
+
+<h1>Találd ki a számot!</h1>
+<p>Adj meg egy számot 1 és 10 között:</p>
+<input type="number" id="tipp" min="1" max="10">
+<button onclick="ellenoriz()">Tippelés</button>
+
+<p id="uzenet"></p>
+
+<script>
+let randomSzam = Math.floor(Math.random() * 10) + 1;
+let probalkozasok = [];
+let siker = false;
+
+function ellenoriz() {
+    let tipp = parseInt(document.getElementById("tipp").value);
+    probalkozasok.push(tipp);
+    
+    if (tipp === randomSzam) {
+        siker = true;
+        document.getElementById("uzenet").innerText = 
+            "Gratulálok! Eltaláltad a számot " + probalkozasok.length + " próbálkozásból!";
+        mentesEredmeny(probalkozasok.length);
+    } else if (tipp < randomSzam) {
+        document.getElementById("uzenet").innerText = "A gondolt szám nagyobb!";
+    } else {
+        document.getElementById("uzenet").innerText = "A gondolt szám kisebb!";
+    }
+}
+
+function mentesEredmeny(lepes) {
+    //a JSON tömböket tud szöveggé és vissza alakítani
+    localStorage.setItem("probak", JSON.stringify(probalkozasok));
+    localStorage.setItem("lepes", lepes);
+    setTimeout(() => window.location.href = "statisztikak.html", 2000);
+}
+</script>
+</body>
+</html>
